@@ -20,7 +20,7 @@
 \usepackage{minted}
 \usepackage{hyperref}
 \usepackage{multicol}
-\setminted[scala]{fontsize=\small,baselinestretch=1,obeytabs=true, tabsize=2}
+\setminted[scala]{fontsize=\small,frame=lines,baselinestretch=1,obeytabs=true, tabsize=2}
 \setminted[yaml]{fontsize=\large,frame=lines,linenos,baselinestretch=1,obeytabs=true, tabsize=2}
 \usepackage[ddmmyyyy]{datetime}
 \setminted{fontsize=\footnotesize}
@@ -80,6 +80,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\input{macro-ac.tex}
 \frame{\titlepage}
 %===============================================================================
 \section{Introduction}
@@ -88,14 +89,14 @@
 \begin{frame}{Context}
 \begin{exampleblock}{Modern IT systems are more and more \bold{complex}}
 	\begin{itemize}
-		\item incresing availability of werable/mobile/embedded/flyings devices
+		\item increasing availability of wearable/mobile/embedded/flying devices
 		\item increasing availability of heterogeneous wireless networks
 		\item increasing availability of computational resources (edge/fog/cloud computing)
 		\item increasing production of data \bold{everywhere} and \bold{anytime}
 	\end{itemize}
 \end{exampleblock}
 \begin{alertblock}{The challenge}
-	Consider the worst case possible scenario
+	Consider the worst-case possible scenario
 	\begin{itemize}
 		\item \bold{zillion} of devices \emph{unpredictably} locaed and moving in a space
 		\item heterogeneous displacement, \bold{pervasive} sensing/actuation
@@ -118,7 +119,7 @@
 	\includegraphics[width=0.333\textwidth]{img/traffic.jpg}	
 	\end{center}
 \end{frame}
-\begin{frame}{Examples: controlling a fleets of drones}
+\begin{frame}{Examples: controlling a fleet of drones}
 \centering
 \includegraphics[width=0.7\textwidth]{img/crazyflies}
 \begin{alertblock}{Issues}
@@ -133,7 +134,7 @@
 \begin{alertblock}{Issue}
 	\begin{itemize}
 		\item Design \bold{self-organisation} algorithms for people navigation
-		\item More generally, design map-based large scale applications
+		\item More generally, design map-based large-scale applications
 	\end{itemize}
 \end{alertblock}
 \end{frame}
@@ -150,7 +151,7 @@
 \end{frame}
 \begin{frame}{Collective \underline{Adaptive} Systems}
 \begin{alertblock}{\textbf{Adaptation}}
-A system is \emph{adaptive} if it is able to \bold{change} its own behaviour
+A system is \emph{adaptive} if it can \bold{change} its behaviour
 depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 \faArrowRight \, Adaptivess in \bold{intrisic} to open complex system (like CASs)
 \end{alertblock}
@@ -194,7 +195,7 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 	\item self-organising: a bottom-up way of achieving adaptiveness
 	\item[\faArrowRight] the adaptive behaviour emerges from local interactions
 	\begin{itemize}
-		\item The typical approach in large scale CASs
+		\item The typical approach in large-scale CASs
 		\item Born in the context of \bold{swarm intelligence}
 	\end{itemize}
 \end{itemize}
@@ -279,13 +280,72 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 \begin{frame}{Aggregate programming as a functional approach}
 \begin{exampleblock}{Functionally composing fields}
 \begin{itemize}
-	\item Inputs: sensor fields, Output: actuator field
+	\item \bold{Inputs}: sensor fields, Output: actuator field
 	\item Computation is a pure function over fields (time embeds state!)
 	\item[\faArrowRight] for this to be practical/expressive we need a good programming language
 \end{itemize}
 \end{exampleblock}
 \centering
 \includegraphics[width=0.65\textwidth]{img/functions.pdf}
+\end{frame}
+\begin{frame}[fragile]{Preview}
+	\begin{exampleblock}{How do we want that computation to be expressed?}
+		\begin{itemize}
+			\item \texttt{source}, \texttt{dest} and \texttt{width} as inputs
+			\item \bold{\texttt{gradient}}, \bold{\texttt{distance}} and \bold{\texttt{dilate}} as reusable functions
+			\item[\faArrowRight] note we are reusing and composing global-level, aggregate specs 
+		\end{itemize}
+	\end{exampleblock}
+\centering
+\includegraphics[width=0.45\textwidth]{img/functions.pdf}
+\begin{minted}{scala}
+def channel(source: Boolean, dest: Boolean, width: Double): Boolean = {
+	dilate(gradient(source) + gradient(dest) <= distance(source,dest), width)
+}
+\end{minted}
+\end{frame}
+\begin{frame}{Field calculus model}
+\begin{exampleblock}{Key idea}
+	\begin{itemize}
+  \item a sort of $\lambda$-calculus with ``everything is a field'' philosophy!
+	\end{itemize}
+\end{exampleblock}
+\begin{alertblock}{Syntax -- Reduced}
+	$\e \;\BNFcce\; \xname 
+	\; \BNFmid \; \anyvalue 
+%   \;\BNFmid \; \shadow{c\langle\overline\e\rangle}
+	\; \BNFmid \; {\e} (\e_1,\ldots,\e_n)
+	\;\BNFmid \; \repK(\e_0)\{\e\}
+	\; \BNFmid \; \nbrK\{\e\}$\hfill(expr)\\
+ $\anyvalue \;\BNFcce \; \textrm{$<$ standard-values $>$} \; \BNFmid \; \lambda $\hfill(value)\\
+ $\lambda \;\BNFcce \; \fname \; \BNFmid \; \oname \; \BNFmid \; (\overline{\xname})\texttt{=>}\e$\hfill(functional value)\\
+ $\FUNCTION \;\BNFcce \; \defK \; \fname (\overline{\xname}) \; \{\e\}$\hfill(function definition)
+\end{alertblock}
+\begin{exampleblock}{Few explanations}
+	\begin{itemize}
+	\item $\anyvalue$ includes numbers, booleans, strings,..\\
+	..tuples/vectors/maps/any-ADT (of expressions)
+	\item $\fname$ is a user-defined function (the key aggregate computing abstraction)
+	\item $\oname$ is a built-in local operator (pure math, local sensors,..)
+	\end{itemize}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}{Intuition of global-level (denotational) semantics}
+	\begin{exampleblock}{The four main constructs at work\\ $\Rightarrow$ values, application, evolution, and interaction -- in aggregate guise}
+	\begin{itemize}
+		\item $\e \;\BNFcce\; \ldots
+   \; \BNFmid \; {\anyvalue}
+   \; \BNFmid \; {\e} (\e_1,\ldots,\e_n)
+   \;\BNFmid \; \repK(\e_0)\{\e\}
+   \; \BNFmid \; \nbrK\{\e\}$
+	\end{itemize}
+	\end{exampleblock}
+\begin{center}
+\includegraphics[height=2.3cm]{img/ing-v.pdf}\hspace{30pt}
+\includegraphics[height=2.57cm]{img/ing-mix5.pdf}\\[5pt]
+\includegraphics[height=2.42cm]{img/ing-rep2.pdf}\hspace{10pt}
+\includegraphics[height=1.96cm]{img/ing-nbr4.pdf}\end{center}
 \end{frame}
 \begin{frame}[c, plain]
 \begin{center}
@@ -297,6 +357,7 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 	\includegraphics[width=0.215\textwidth]{img/obstacle-avoidance.png}
 \end{center}
 \end{frame}
+
 %===============================================================================
 \section{Playing with ScaFi!}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Guided Examples}
@@ -328,7 +389,7 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 \begin{frame}{ScaFi Incarnation}
 \begin{block}{Motivation}
 	\begin{itemize}
-		\item ScaFi has it own simulator \dots
+		\item ScaFi has its own simulator \dots
 		\item \dots but it is not as powerful as Alchemist, which:
 		\begin{itemize}
 			\item support GPS traces
@@ -355,13 +416,13 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 		\item It is a superset of JSON
 		\item Support anchors and references
 	\end{itemize}
-	\item The same syntax is useds for \bold{any} incarnations
+	\item The same syntax is used for \bold{any} incarnations
 	\item Support running in \bold{batch}
 	\item No compilation is needed 
 	\begin{itemize}
 		\item[\faThumbsUp] Once you have your ScaFi script compiled, you can run it in several alchemist simulations!!
 	\end{itemize}
-	\item Support ad-hoc export of simulation data through csv files. 
+	\item Support ad-hoc export of simulation data through CSV files. 
 \end{itemize}
 \end{frame}
 \begin{frame}[fragile]{Minimal specification}
