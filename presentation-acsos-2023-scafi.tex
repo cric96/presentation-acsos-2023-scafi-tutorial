@@ -347,6 +347,101 @@ def channel(source: Boolean, dest: Boolean, width: Double): Boolean = {
 \includegraphics[height=2.42cm]{img/ing-rep2.pdf}\hspace{10pt}
 \includegraphics[height=1.96cm]{img/ing-nbr4.pdf}\end{center}
 \end{frame}
+\begin{frame}[fragile]{Intuition of global-level semantics -- More}
+\begin{exampleblock}{Value $\anyvalue$}
+	\begin{itemize}
+	\item A field constant in space and time, mapping any event to $\anyvalue$
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{Function application ${\e} (\e_1,\ldots,\e_n)$}
+	\begin{itemize}
+	\item $\e$ evaluates to a field of functions, assume it ranges to $\lambda_1,\ldots,\lambda_n$
+	\item this naturally induces a partition of the domain $\domS_1,\ldots,\domS_n$
+	\item now, join the fields: $\forall i$, $\lambda_i (\e_1,\ldots,\e_n)$ restricted in $\domS_i$
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{Repetition $\repK(\e_0)\{\e_\lambda\}$}
+	\begin{itemize}
+	\item the value of $\e_0$ where the restricted domain ``begins''
+	\item elsewhere, unary function $\e_\lambda$ is applied to previous value at each device
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{Neighbouring  field construction $\nbrK\{\e\}$}
+	\begin{itemize}
+	\item at each event gathers most recent value of $\e$ in neighbours (in restriction)
+	\item ..what is neighbour is orthogonal (i.e., physical proximity)
+	\end{itemize}
+	\end{exampleblock}
+\end{frame}
+\begin{frame}{Key aspects of the semantics: network model}
+	\begin{exampleblock}{Platform abstract model}
+	\begin{itemize}
+			\item A node state $\theta$ (value-tree) updated at asynchronous rounds
+			\item At the end of the round, $\theta$ is made accessible to the neighbourhood
+			\item A node state is updated ``against'' recently received neighbours' trees
+	\end{itemize}
+	\end{exampleblock}
+	\centering
+	\includegraphics[height=0.5\textheight]{img/nodes.pdf}
+	%\fg{height=0.5\textheight}{img/nodes.pdf}
+	\end{frame}
+	
+\begin{frame}[fragile]{Tree evaluation: pictorial semantics}
+	\only<1>{
+		\centering
+		\includegraphics[height=0.75\textheight]{img/tree.pdf}
+	}
+	\only<2>{
+		\centering
+		\includegraphics[height=0.75\textheight]{img/tree2.pdf}
+	}
+	\end{frame}
+
+	\begin{frame}[fragile]{Core mechanisms in the operational semantics}
+	\begin{exampleblock}{Orthogonally..}
+	\begin{itemize}
+	\item evaluation proceeds recursively on expression and neighbour trees
+	\item neighbour trees may be discarded on-the-fly if not ``aligned'' (restriction)
+	\end{itemize}
+	\end{exampleblock}
+	\uncover<2->{\begin{exampleblock}{Function application ${\e} (\e_1,\ldots,\e_n)$}
+	\begin{itemize}
+	\item evaluates the body against a filtered set of neighbours \dots
+	\item ..i.e., only those which evaluated $\e$ to the same result
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{Repetition $\repK(\e_0)\{\e_\lambda\}$}
+	\begin{itemize}
+	\item if a previous value-tree of mine is available, evaluates $\e_\lambda$ on its root
+	\item otherwise, evaluates $\e_0$
+	\end{itemize}
+	\end{exampleblock}
+	\begin{exampleblock}{Neighbouring  field construction $\nbrK\{\e\}$}
+	\begin{itemize}
+	\item gather values from neighbour trees currently aligned
+	\item add my current evaluation of $\e$
+	\end{itemize}
+\end{exampleblock}}
+\end{frame}
+	
+\begin{frame}{Operational semantics as a blueprint for platform support}
+	\begin{exampleblock}{Requirements}
+	\begin{itemize}
+		\item a notion of the neighbourhood must be defined --- wireless connectivity, physical proximity \dots
+		\item nodes execute in asynchronous rounds, and emit a ``round result''
+		\item a node needs to have recent round results of neighbours
+		\item by construction we tolerate losses of messages
+		\item by construction we tolerate various round frequencies
+	\end{itemize}
+	\end{exampleblock}
+	\uncover<2->{\begin{exampleblock}{Platform details are very orthogonal to our programming model!}
+	\begin{itemize}
+		\item the above requirements can be met by various platforms
+		\item \emph{programming remains mostly unaltered!}
+	\end{itemize}
+	\end{exampleblock}}
+\end{frame}
+	
 \begin{frame}[c, plain]
 \begin{center}
 	\includegraphics[width=0.2\textwidth]{img/qr-code-scafi.png}\\
@@ -357,13 +452,77 @@ def channel(source: Boolean, dest: Boolean, width: Double): Boolean = {
 	\includegraphics[width=0.215\textwidth]{img/obstacle-avoidance.png}
 \end{center}
 \end{frame}
+\begin{frame}{ScaFi: Organization}
+\centering
+\includegraphics[width=0.9\textwidth]{img/scafi-project-org.pdf}
+\end{frame}
+\begin{frame}{ScaFi: Design}
+\centering
+\includegraphics[width=0.8\textwidth]{img/scafi-design.drawio.pdf}
+\end{frame}
+\begin{frame}[fragile]{ScaFi: syntax as a core language/API}
 
+\begin{minted}{scala}
+trait Constructs {
+	// the unique identifier of the local device 
+	def mid(): ID
+	
+	// applies fun to the previous result, or to init at the first call
+	def rep[A](init: A)(fun: (A) => A): A
+	
+	// evaluation of expr at the currently-considered neighbour
+	def nbr[A](expr: => A): A
+	
+	// accumulates available evaluations of expr, with acc/init monoid
+	def foldhood[A](init: => A)(acc: (A,A)=>A)(expr: => A): A
+	
+	// splits computation: th where cond is true, el everywhere/time else
+	def branch[A](cond: => Boolean)(th: => A)(el: => A): A
+	
+	// perception of local sensor
+	def sense[A](name: CNAME): A
+	
+	// perception of neighbourhood sensor
+	def nbrvar[A](name: CNAME): A
+	...
+}
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{ScaFi: setup an aggregate application}
+
+\begin{minted}{scala}
+package experiments
+// STEP 1 Choose an incarnation (simulated or real)
+import it.unibo.scafi.incarnations.BasicSimulationIncarnation._
+
+// STEP 2 Define the aggregate program including the right libraries
+class MyProgram extends AggregateProgram with Libs {
+	// STEP 2.1 Define main logic of the program
+	override def main(): Any = ...
+}
+
+// STEP 3 Platform/Node setup (both in simulation/real)
+
+// STEP 3.1 in case of ScaFi simulation:
+object SimulationRunner extends Launcher {
+  Settings.Sim_ProgramClass = "experiments.MyAggregateProgram"
+  Settings.ShowConfigPanel = true
+  launch()
+}
+\end{minted}
+\begin{center}
+{\huge So let us start playing with ScaFi!! \bold{\faSmileO}}
+\end{center}
+\end{frame}
 %===============================================================================
-\section{Playing with ScaFi!}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Guided Examples}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Self-organising blocks -- Gradient and Channel}
-%===============================================================================
+\section{Playing with ScaFi!}
+
+\begin{frame}{An aggregate computing playground -- ScaFi Web!}
+\centering
+\url{https://scafi.github.io/web/}
+\includegraphics[width=\textwidth]{img/gradient-web.png}
+\end{frame}
 \section{ScaFi in real-world scenarios: Integration with Alchemist}
 \subsection{Alchemist}
 \begin{frame}[c, plain]

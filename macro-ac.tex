@@ -1,5 +1,46 @@
 %%% Syntax
 
+\newcommand{\FieldS}[0]{\mathcal{F}}
+\newcommand{\EventS}[0]{\mathcal{E}}
+\newcommand{\eventS}[0]{E}
+\newcommand{\timeS}[0]{t}
+\newcommand{\posS}[0]{p}
+\newcommand{\event}[3]{\langle #1,#2,#3\rangle}
+\newcommand{\devF}[1]{\deviceId_{#1}}
+\newcommand{\timeF}[1]{\timeS_{#1}}
+\newcommand{\posF}[1]{\posS_{#1}}
+\newcommand{\domS}[0]{D}
+\newcommand{\DomS}[0]{\mathcal{D}}
+\newcommand{\DomDevF}[2]{#1(#2)}
+\newcommand{\DomTimeF}[2]{#1(#2)}
+\newcommand{\DomMTimeF}[2]{#1^{-}(#2)}
+\newcommand{\DomDomF}[2]{#1(#2)}
+\newcommand{\DomDevTimeF}[3]{#1(#2,#3)}
+\newcommand{\DomDevMTimeF}[3]{#1^{-}(#2,#3)}
+
+\newcommand{\feS}[0]{\Phi}
+\newcommand{\setVS}[0]{\textbf{V}}
+\newcommand{\setTS}[0]{\textbf{T}}
+\newcommand{\setCS}[0]{\textbf{C}}
+
+\newcommand\pto{\mathrel{\ooalign{\hfil$\mapstochar$\hfil\cr$\to$\cr}}}
+
+\newcommand{\neighbour}[2]{\textit{neigh}(#1,#2)}
+
+\newcommand{\denot}[1]{\mathcal{E}\llbracket{#1}\rrbracket}
+\newcommand{\denotapp}[2]{\denot{#1}_{#2}}
+\newcommand{\denotappsub}[3]{\denot{#1}_{#2}^{#3}}
+\newcommand{\denotfun}[3]{\mathcal{L}\llbracket{#1}\rrbracket_{#2}^{#3}}
+\newcommand{\denottype}[1]{\mathcal{T}\llbracket{#1}\rrbracket}
+\newcommand{\denotexp}[3]{\mathcal{E}\llbracket{#1}\rrbracket_{#2}^{#3}}
+\newcommand{\denotf}[2]{\lambda #1.#2}
+
+\newcommand{\dvalue}[0]{V}
+
+\newcommand{\myeval}[4]{\epsilon(#1,#2,#3,#4)}
+
+\newcommand{\fiecomp}[2]{#1[#2]}
+
 
 \newcommand{\BNFcce}{{\bf ::=}}
 \newcommand{\BNFmid}{\;\bigr\rvert\;}
