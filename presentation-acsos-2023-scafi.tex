@@ -201,10 +201,32 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 \end{exampleblock}
 \end{frame}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{frame}{Good Abstraction for CASs?}
+\begin{alertblock}{Ideas}
+	\begin{itemize}
+		\item specify \bold{overall} behaviour, not \emph{individual} device program
+		\item abstract from the actual shape of \bold{interactions}
+		\item \bold{automatically} adapt to environment details
+		\item focus on how the \bold{global output} pattern can be obtained from global inputs
+		\item focus on both \bold{spatial} and \bold{temporal} computing patterns
+		\item[\faArrowRight] the ideas around macro-programming paradigms!
+		\begin{itemize}
+			\item \bold{Aggregate computing}
+			\item Buzz
+			\item \dots
+		\end{itemize}
+		\item Ruccurent abstractions:
+		\begin{itemize}
+			\item Ensembles \& collective tasks
+			\item Self-organising information flows
+			\item Self-healing collective structures (e.g., \emph{gradients})
+		\end{itemize}
+	\end{itemize}
+\end{alertblock}
+\end{frame}
 \subsection{Aggregate Computing}
 \begin{frame}[c, plain]
 \begin{center}
-
 	\includegraphics[width=0.5\textwidth]{img/aggregate-computing-structure.png}\\
 	{\Huge \textbf{Aggregate Computing}}\\
 	{\large Program the \bold{aggregate}, not the individual device} \\[0.2cm]
@@ -213,6 +235,57 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 {\faCircle \, \normalsize{\emph{Elaboration process}} \faArrowRight \, atomic manipulation of a \emph{collective} data structure (\bold{computational field})}\\
 {\faCircle \, \normalsize{\emph{Networked computation}} \faArrowRight \,
 a proximity-based self-organising system hidden ``under-the-hood''}
+\end{frame}
+\begin{frame}{Computational model -- self-organising like execution}
+\begin{itemize}
+	\item \emph{Continuous} communication with \bold{neighbours} only (\faArrowRight decentralisation)
+	\item \emph{Continous} execution of async \bold{rounds} of sense - compute - communicate
+\end{itemize}
+\centering
+\includegraphics[width=0.8\textwidth]{img/execution-step.png}
+\end{frame}
+\begin{frame}[fragile]{Computational Fields: a static view}
+	\begin{alertblock}{Traditionally a map: \textit{Space} $\mapsto$ \textit{Values}}
+		\begin{itemize}
+			\item possibly: evolving over time, dynamically injected, stabilising
+			\item smoothly adapting to very heterogeneous domains
+			\item more easily \emph{``understood''} on continuous and flat spatial domains
+			\item ranging to booleans, reals, vectors, functions
+		\end{itemize}
+	\end{alertblock}
+	\vfill
+	\begin{multicols}{3}
+		{\fbox{\includegraphics[height=2.3cm]{img/cesena0.png}} boolean channel in 2D}
+		{\fbox{\includegraphics[height=2.3cm]{img/partition.png}} numeric partition in 2D}
+		{\fbox{\includegraphics[height=2.3cm]{img/surface2.png}} real-valued gradient in 3D}
+	\end{multicols}
+\end{frame}
+\begin{frame}{Computational Fields revisited: a dynamic view}
+\begin{alertblock}{A field as a \textit{space-time} structure: $\phi:D\mapsto V$}
+\begin{itemize}
+		\item {\it event} $E$: a triple $\langle \delta, t, p\rangle$ -- device $\delta$, ``firing'' at time $t$ in position $p$
+		\item {\it events domain} $D$: a coherent set of events (devices cannot move too fast)
+		\item {\it field values} $V$: any data value
+		\item[\faArrowRight] computation abstracts from/adapts to the underlying event
+		\item[\faArrowRight] scheduling of events is essentially exogenous
+\end{itemize}
+\end{alertblock}
+\begin{center}
+\includegraphics[height=4cm]{img/spacetime1.pdf}~~~~~~~~~~
+\only<2->{\includegraphics[height=4cm]{img/spacetime2.pdf}} 
+\end{center}
+\only<3->{will later show only snapshots of fields in 2D space..}
+\end{frame}
+\begin{frame}{Aggregate programming as a functional approach}
+\begin{exampleblock}{Functionally composing fields}
+\begin{itemize}
+	\item Inputs: sensor fields, Output: actuator field
+	\item Computation is a pure function over fields (time embeds state!)
+	\item[\faArrowRight] for this to be practical/expressive we need a good programming language
+\end{itemize}
+\end{exampleblock}
+\centering
+\includegraphics[width=0.65\textwidth]{img/functions.pdf}
 \end{frame}
 \begin{frame}[c, plain]
 \begin{center}
@@ -224,7 +297,6 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 	\includegraphics[width=0.215\textwidth]{img/obstacle-avoidance.png}
 \end{center}
 \end{frame}
-
 %===============================================================================
 \section{Playing with ScaFi!}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Guided Examples}
