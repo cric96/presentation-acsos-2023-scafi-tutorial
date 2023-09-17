@@ -19,7 +19,8 @@
 \usepackage{minted}
 \usepackage{hyperref}
 \usepackage{multicol}
-\setminted[scala]{fontsize=\scriptsize,baselinestretch=1,obeytabs=true, tabsize=2}
+\setminted[scala]{fontsize=\small,baselinestretch=1,obeytabs=true, tabsize=2}
+\setminted[yaml]{fontsize=\large,frame=lines,linenos,baselinestretch=1,obeytabs=true, tabsize=2}
 \usepackage[ddmmyyyy]{datetime}
 \setminted{fontsize=\footnotesize}
 \renewcommand{\dateseparator}{}
@@ -143,6 +144,61 @@
 		\item \dots
 	\end{itemize}
 \end{exampleblock}
+\end{frame}
+\begin{frame}{Writing Simulations with ScaFi incarnation}
+\begin{itemize}
+	\item Alchemist uses YAML\footnote{\url{https://learnxinyminutes.com/docs/yaml/}} as language for writing simulations
+	\begin{itemize}
+		\item YAML is a human-readable data-serialization language
+		\item It is a superset of JSON
+		\item Support anchors and references
+	\end{itemize}
+	\item The same syntax is useds for \bold{any} incarnations
+	\item Support running in \bold{batch}
+	\item No compilation is needed 
+	\begin{itemize}
+		\item[\faThumbsUp] Once you have your ScaFi script compiled, you can run it in several alchemist simulations!!
+	\end{itemize}
+	\item Support ad-hoc export of simulation data through csv files. 
+\end{itemize}
+\end{frame}
+\begin{frame}[fragile]{Minimal specification}
+\begin{minted}{yaml}
+incarnation: scafi
+\end{minted}
+\end{frame}
+\begin{frame}[fragile]{Node displacement and connection}
+\begin{minted}{yaml}
+incarnation: scafi
+network-model:
+  type: ConnectWithinDistance
+  parameters: [0.5]
+
+# More deployments at 
+# https://alchemistsimulator.github.io/howtos/simulation/deploy
+deployments: # Description of where the nodes should be
+  type: Grid
+  parameters: [-5, -5, 5, 5, 0.25, 0.25, 0, 0]
+\end{minted}
+\end{frame}
+\begin{frame}[fragile]{Node Content}
+	\begin{minted}{yaml}
+incarnation: scafi
+network-model:
+  type: ConnectWithinDistance
+  parameters: [0.5]
+
+deployments: # Description of where the nodes should be
+  type: Grid
+  parameters: [-5, -5, 5, 5, 0.25, 0.25, 0, 0]
+  contents:
+	  - molecule: data
+		  value: 0
+	  - in:
+		  	type: Rectangle
+		  	parameters: [-1, -1, 2, 2]
+		  molecule: source
+\end{minted}
 \end{frame}
 \section{}
 
