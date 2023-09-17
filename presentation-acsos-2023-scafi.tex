@@ -83,6 +83,7 @@
 \frame{\titlepage}
 %===============================================================================
 \section{Introduction}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Context -- Collective Adaptive Systems}
 \begin{frame}{Context}
 \begin{exampleblock}{Modern IT systems are more and more \bold{complex}}
@@ -117,27 +118,89 @@
 	\includegraphics[width=0.333\textwidth]{img/traffic.jpg}	
 	\end{center}
 \end{frame}
-
 \begin{frame}{Examples: controlling a fleets of drones}
 \centering
 \includegraphics[width=0.7\textwidth]{img/crazyflies}
 \begin{alertblock}{Issues}
 \begin{itemize}
-	\item Design techniques to reactively propagate information across the fleet
-	\item Create algorithms for higher-level programming of the fleet
+	\item Design techniques to \bold{reactively} propagate information across the fleet
+	\item Create algorithms for \bold{higher-level} programming of the fleet
 \end{itemize}
 \end{alertblock}
 \end{frame}
-\begin{frame}{Examples: Edge-Cloud Ecosystems}
-
+\begin{frame}{Examples: pedestrian steering in (smart)cities}
+\includegraphics[width=0.9\textwidth]{img/pedastrian.png}
+\begin{alertblock}{Issue}
+	\begin{itemize}
+		\item Design \bold{self-organisation} algorithms for people navigation
+		\item More generally, design map-based large scale applications
+	\end{itemize}
+\end{alertblock}
 \end{frame}
-\begin{frame}{Examples: Crowds and Smart Cities}
+\begin{frame}{Examples: fine control of crowds}
+\centering
+\includegraphics[width=0.9\textwidth]{img/coldplay}
+\begin{alertblock}{Issues}
+	\begin{itemize}
+		\item Evaluating the influence of environment in crowd formation
+		\item Evaluating the influence of ambient sensors, cameras and wearable
+		devices
+	\end{itemize}
+\end{alertblock}
 \end{frame}
-
-\begin{frame}{Reference Scenario: The smart concert}
-
+\begin{frame}{Collective \underline{Adaptive} Systems}
+\begin{alertblock}{\textbf{Adaptation}}
+A system is \emph{adaptive} if it is able to \bold{change} its own behaviour
+depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
+\faArrowRight \, Adaptivess in \bold{intrisic} to open complex system (like CASs)
+\end{alertblock}
+\begin{exampleblock}{Kind of adaptiveness, self-* properties}
+	\centering
+	\includegraphics[width=0.8\textwidth]{img/self-*.png}
+\end{exampleblock}
 \end{frame}
-
+\begin{frame}{Kind of adaptiveness}
+\begin{exampleblock}{Self-adaptiveness: general level}
+	\begin{itemize}
+		\item \bold{self-adaptiveness} \faArrowRight \, the ultimate property we perceive from outside
+		\item the terms ``self-*'' recalls a property achieved in \bold{autonomy}
+		\item subcases: self-managing, -governing, -maintenance, -control
+	\end{itemize}
+\end{exampleblock}
+\begin{exampleblock}{Major level}
+	\begin{itemize}
+		\item internal properties related to overall system management
+		\item subcases: self-configuring, self-healing, self-optimising, self-protecting
+		\item defined in the context of \bold{autonomic} computing
+	\end{itemize}
+\end{exampleblock}
+\begin{exampleblock}{Primitive level}
+	\begin{itemize}
+		\item internal properties related to primitive aspects
+		\item subcases: self-awareness, context-awareness
+		\item means being able to properly perceive the own state, context, \dots
+	\end{itemize}
+\end{exampleblock}
+\end{frame}
+\begin{frame}{The case of self-organisation}
+\begin{alertblock}{Self-organisation}
+	\centering
+	The ability of creating \bold{spatial/temporal} patterns out of the \emph{local interaction} of individuals
+\end{alertblock}
+\begin{exampleblock}{Self-adaptive vs. self-organising}
+\begin{itemize}
+	\item self-adaptive: a top-down way of achieving adaptiveness
+	\item[\faArrowRight] we have the adaptation goal, and accordingly guide components 
+	\item self-organising: a bottom-up way of achieving adaptiveness
+	\item[\faArrowRight] the adaptive behaviour emerges from local interactions
+	\begin{itemize}
+		\item The typical approach in large scale CASs
+		\item Born in the context of \bold{swarm intelligence}
+	\end{itemize}
+\end{itemize}
+\end{exampleblock}
+\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Aggregate Computing}
 \begin{frame}[c, plain]
 \begin{center}
@@ -150,7 +213,6 @@
 {\faCircle \, \normalsize{\emph{Elaboration process}} \faArrowRight \, atomic manipulation of a \emph{collective} data structure (\bold{computational field})}\\
 {\faCircle \, \normalsize{\emph{Networked computation}} \faArrowRight \,
 a proximity-based self-organising system hidden ``under-the-hood''}
-
 \end{frame}
 \begin{frame}[c, plain]
 \begin{center}
@@ -162,9 +224,13 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 	\includegraphics[width=0.215\textwidth]{img/obstacle-avoidance.png}
 \end{center}
 \end{frame}
-\section{Playing with ScaFi!}
+
+%===============================================================================
+\section{Playing with ScaFi!}%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Guided Examples}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Self-organising blocks -- Gradient and Channel}
+%===============================================================================
 \section{ScaFi in real-world scenarios: Integration with Alchemist}
 \subsection{Alchemist}
 \begin{frame}[c, plain]
