@@ -72,7 +72,29 @@
 \section{Introduction}
 \subsection{Context -- Collective Adaptive Systems}
 \begin{frame}{Context}
-
+\begin{exampleblock}{Modern IT systems are more and more \bold{complex}}
+	\begin{itemize}
+		\item incresing availability of werable/mobile/embedded/flyings devices
+		\item increasing availability of heterogeneous wireless networks
+		\item increasing availability of computational resources (edge/fog/cloud computing)
+		\item increasing production of data \bold{everywhere} and \bold{anytime}
+	\end{itemize}
+\end{exampleblock}
+\begin{alertblock}{The challenge}
+	Consider the worst case possible scenario
+	\begin{itemize}
+		\item \bold{zillion} of devices \emph{unpredictably} locaed and moving in a space
+		\item heterogeneous displacement, \bold{pervasive} sensing/actuation
+		\item computational services are \bold{contextual} (proximity-based) and \emph{dynamic} 
+	\end{itemize}
+\end{alertblock}
+\begin{center}
+\Large{How can we \bold{program} such systems?}
+\end{center}
+\begin{center}
+	\Large{What are the right \bold{abstractions}?}
+	\end{center}
+	
 \end{frame}
 \begin{frame}[plain,c]
 	\begin{center}
@@ -98,7 +120,19 @@
 \end{frame}
 
 \subsection{Aggregate Computing}
+\begin{frame}[c, plain]
+\begin{center}
 
+	\includegraphics[width=0.5\textwidth]{img/aggregate-computing-structure.png}\\
+	{\Huge \textbf{Aggregate Computing}}\\
+	{\large Program the \bold{aggregate}, not the individual device} \\[0.2cm]
+\end{center}
+{\faCircle \, \normalsize{\emph{Computing Machine}} \faArrowRight \, an ensemble of devices as a single body, fading the actual space}\\
+{\faCircle \, \normalsize{\emph{Elaboration process}} \faArrowRight \, atomic manipulation of a \emph{collective} data structure (\bold{computational field})}\\
+{\faCircle \, \normalsize{\emph{Networked computation}} \faArrowRight \,
+a proximity-based self-organising system hidden ``under-the-hood''}
+
+\end{frame}
 \begin{frame}[c, plain]
 \begin{center}
 	\includegraphics[width=0.2\textwidth]{img/qr-code-scafi.png}\\
