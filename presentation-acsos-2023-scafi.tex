@@ -70,11 +70,13 @@
 %===============================================================================
 \section{Introduction}
 \subsection{Context -- Collective Adaptive Systems}
+\begin{frame}{Context}
+
+\end{frame}
 \begin{frame}[plain,c]
-	%\frametitle{A first slide}
 	\begin{center}
-	\Huge Collective Adaptive Systems (CASs)\\
-	{\large Systems composed of \emph{possibly} \bold{large} set of component executing a \bold{collective} task strongly relying on component \bold{interactions} and showing \bold{inherent} \emph{adaptivity}.}\\
+	\Huge \textbf{Collective Adaptive Systems} (CASs)\\
+	{\large Systems composed of \emph{possibly} \bold{large} set of component executing a \bold{collective} task strongly relying on component \bold{interactions} and showing \bold{inherent} \emph{adaptivity}.}\\[0.3cm]
 	\includegraphics[width=0.2\textwidth]{example-image-a}
 	\includegraphics[width=0.2\textwidth]{example-image-b}
 	\includegraphics[width=0.2\textwidth]{example-image-c}	
@@ -100,7 +102,48 @@
 \subsection{Self-organising blocks -- Gradient and Channel}
 \section{ScaFi in real-world scenarios: Integration with Alchemist}
 \subsection{Alchemist}
-
+\begin{frame}[c, plain]
+\begin{center}
+	\includegraphics[width=0.2\textwidth]{img/qr-code.png}\\
+	\Huge \textbf{Alchemist}\\
+	{\large An \bold{extensible} \emph{meta}-simulator for \textbf{pervasive} computing scenarios}\\[0.3cm]
+	\includegraphics[width=0.5\textwidth]{img/alchemist-recap.png}
+\end{center}
+\end{frame}
+\begin{frame}{Abstract model}
+\centering
+\includegraphics[width=0.8\textwidth]{img/abstract-model.png}
+\end{frame}
+\begin{frame}{Reactions}
+\centering
+\includegraphics[width=0.8\textwidth]{img/reaction-model.png}
+\end{frame}
+\begin{frame}{Overall Architecture}
+\centering
+\includegraphics[width=0.8\textwidth]{img/alchemist-architecture.png}
+\end{frame}
+\begin{frame}{ScaFi Incarnation}
+\begin{block}{Motivation}
+	\begin{itemize}
+		\item ScaFi has it own simulator \dots
+		\item \dots but it is not as powerful as Alchemist, which:
+		\begin{itemize}
+			\item support GPS traces
+			\item can simulate thousands of nodes
+			\item can simulate different kinds of networks
+			\item can simulate different mobility models
+		\end{itemize}
+	\end{itemize}
+\end{block}
+\begin{exampleblock}{ScaFi-Alchemist known uses}
+	\begin{itemize}
+		\item Swarm Robotics API: MacroSwarm\footnote[frame]{\fullcite{macroswarm}}
+		\item Large-Scale smart cities simulations: FloodWatch\footnote[frame]{\fullcite{iee-floodwatch}}
+		\item Crowd simulations
+		\item \dots
+	\end{itemize}
+\end{exampleblock}
+\end{frame}
 \section{}
 
 %===============================================================================
