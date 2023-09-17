@@ -12,6 +12,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{wasysym}
 \usepackage{amsmath,blkarray}
+\usepackage{soul}
 \usepackage[minted,most]{tcolorbox}
 \usepackage{centernot}
 \usepackage{fontawesome}
@@ -50,12 +51,24 @@
 \institute[DISI, Univ.\ Bologna]
 {%Dipartimento di Informatica -- Scienza e Ingegneria (DISI)\\
 \textsc{Alma Mater Studiorum} -- Universit{\`a} di Bologna \\[0.1cm]
-\textbf{Talk @} \bold{International Conference on Autonomic Computing and Self-Organizing Systems (ACSOS)}}
+\textbf{Talk @} \bold{International Conference on Autonomic Computing and Self-Organizing Systems (ACSOS)}\\[0.15cm]
+\includegraphics[width=0.15\textwidth]{img/qr-code-scafi.png}
+\includegraphics[width=0.15\textwidth]{img/qr-code.png}
+}
 %
 \renewcommand{\dateseparator}{/}
 \date[\today]{\today}
 %
 \AtBeginSubsection[]
+{
+  \begin{frame}
+  \frametitle{Contents}
+  \tableofcontents[currentsubsection, 
+	sectionstyle=show/shaded, 
+	subsectionstyle=show/shaded]
+  \end{frame}
+}
+\AtBeginSection[]
 {
   \begin{frame}
   \frametitle{Contents}
@@ -94,20 +107,26 @@
 \begin{center}
 	\Large{What are the right \bold{abstractions}?}
 	\end{center}
-	
 \end{frame}
 \begin{frame}[plain,c]
 	\begin{center}
 	{\Huge \textbf{Collective Adaptive Systems} (CASs)}\\
 	{\large Systems composed of \emph{possibly} \bold{large} set of component executing a \bold{collective} task strongly relying on component \bold{interactions} and showing \bold{inherent} \emph{adaptivity}.}\\[0.3cm]
-	\includegraphics[width=0.2\textwidth]{example-image-a}
-	\includegraphics[width=0.2\textwidth]{example-image-b}
-	\includegraphics[width=0.2\textwidth]{example-image-c}	
+	\includegraphics[width=0.28\textwidth]{img/swarms.jpg}
+	\includegraphics[width=0.333\textwidth]{img/coldplay.jpg}
+	\includegraphics[width=0.333\textwidth]{img/traffic.jpg}	
 	\end{center}
 \end{frame}
 
-\begin{frame}{Examples: Swarm Robotics}
-
+\begin{frame}{Examples: controlling a fleets of drones}
+\centering
+\includegraphics[width=0.7\textwidth]{img/crazyflies}
+\begin{alertblock}{Issues}
+\begin{itemize}
+	\item Design techniques to reactively propagate information across the fleet
+	\item Create algorithms for higher-level programming of the fleet
+\end{itemize}
+\end{alertblock}
 \end{frame}
 \begin{frame}{Examples: Edge-Cloud Ecosystems}
 
@@ -244,6 +263,13 @@ deployments: # Description of where the nodes should be
 		  	parameters: [-1, -1, 2, 2]
 		  molecule: source
 \end{minted}
+\end{frame}
+\section{Aggregate Computing -- Research Profiles}
+\begin{frame}{Swarm Robotics}
+
+\end{frame}
+
+\begin{frame}{\st{Multi} Many agent reinforcement}
 \end{frame}
 \section{}
 
