@@ -192,17 +192,61 @@ keywordstyle=[6]\color{orange}, keywords=[6]{Available,Serving,Done,Waiting,Remo
 \lstdefinestyle{conf}{language={},morecomment=[l][\color{darkgreen}]{\#},
 basicstyle=\ttfamily\scriptsize}
 
-
+\newcommand{\question}[1]{\textcolor{darkgray}{\emph{\bo{#1}}}}
+\newcommand{\refslide}[1]{Slide~\ref{#1}}
 
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{macro-ac.tex}
 \frame{\titlepage}
 %===============================================================================
+
+\section{Tutorial Quickstart}
+
+\begin{frame}{Tutorial references}\label{quickstart}
+
+\begin{itemize}
+\item \question{Where do I start?}
+	\begin{itemize}
+	\item \url{https://github.com/TODO}: repository with the examples/exercises proposed in the tutorial
+	\\
+	Follow the README.md to run examples and setup a development environment.
+	\end{itemize}	
+
+
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Frequently Asked Questions (FAQs)}
+
+\begin{itemize}
+\item \question{Where do I start?} \refslide{quickstart}
+
+\item \question{Where do I learn more about the tools (ScaFi, Alchemist)?}
+	\begin{itemize}
+	\item \url{https://scafi.github.io/}
+	\item \url{http://alchemistsimulator.github.io/}
+	\end{itemize}
+	
+\item \question{Where do I learn more about the theory/research on aggregate computing (AC)?} Check out relevant presentations and papers.
+	\begin{itemize}
+	\item \url{https://www.slideshare.net/RobertoCasadei/aggregate-computing-research-an-overview} -- a quick overview of AC research
+	\item \fullcite{vbdacp:ac:survey:jlamp} -- a survey about AC, its history, and main developments
+	\end{itemize}
+
+\item \question{What is the research context?} Check out \refslide{context:start}--\refslide{context:end}
+
+\item \question{What kind of systems can be programmed/developed with AC?} Check out \refslide{applicability} and \refslide{context:start}--\refslide{context:end}
+
+\end{itemize}
+
+\end{frame}
+
 \section{Introduction}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Context -- Collective Adaptive Systems}
-\begin{frame}{Context}
+\begin{frame}{Context}\label{context:start}
 \begin{exampleblock}{Modern IT systems are more and more \bold{complex}}
 	\begin{itemize}
 		\item increasing availability of wearable/mobile/embedded/flying devices
@@ -340,7 +384,10 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 		\end{itemize}
 	\end{itemize}
 \end{alertblock}
+
+\label{context:end}
 \end{frame}
+
 \subsection{Aggregate Computing}
 
 \newsavebox{\exoprogram}
@@ -431,7 +478,7 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 \includegraphics[width=0.8\textwidth]{img/execution-step.png}
 \end{frame}
 
-\begin{frame}[fragile]{Applicability: in a nutshell}
+\begin{frame}[fragile]{Applicability: in a nutshell}\label{applicability}
 
 Essentially, this approach can be used to program \enf{any} system that can be recast to the following
 
