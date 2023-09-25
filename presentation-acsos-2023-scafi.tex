@@ -27,18 +27,32 @@
 \renewcommand{\dateseparator}{}
 %\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\version}{1}
+
 \usepackage[
 	%backend=biber,
 	backend=bibtex,
-	citestyle=authoryear-icomp,
-	maxcitenames=1,
-	bibstyle=numeric]{biblatex}
+%	citestyle=authoryear-icomp,
+%	maxcitenames=1,
+	bibstyle=numeric,
+	style=ieee]{biblatex}
 
 	\makeatletter
 
 %\addbibresource{biblio.bib}
 
 \bibliography{biblio}
+
+
+\newcommand\extrafootertext[1]{%
+    \bgroup
+    \renewcommand\thefootnote{\fnsymbol{footnote}}%
+    \renewcommand\thempfootnote{\fnsymbol{mpfootnote}}%
+    \footnotetext[0]{#1}%
+    \egroup
+}
+
+\newcommand{\citeinslide}[1]{\cite{#1}\extrafootertext{\scriptsize\cite{#1} \fullcite{#1}}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Programming with ScaFi!]
@@ -312,7 +326,7 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 		\item \bold{automatically} adapt to environment details
 		\item focus on how the \bold{global output} pattern can be obtained from global inputs
 		\item focus on both \bold{spatial} and \bold{temporal} computing patterns
-		\item[\faArrowRight] the ideas around macro-programming paradigms!
+		\item[\faArrowRight] the ideas around macro-programming paradigms~\citeinslide{casadei2023macro}!
 		\begin{itemize}
 			\item \bold{Aggregate computing}
 			\item Buzz
