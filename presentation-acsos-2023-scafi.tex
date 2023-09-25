@@ -6,7 +6,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %\documentclass[handout]{beamer}\mode<handout>{\usetheme{default}}
 %
-\documentclass[presentation, 8pt]{beamer}\mode<presentation>{\usetheme{AMSBolognaFC}}
+\documentclass[presentation, 9pt]{beamer}\mode<presentation>{\usetheme{AMSBolognaFC}}
 %\documentclass[handout]{beamer}\mode<handout>{\usetheme{AMSBolognaFC}}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage[T1]{fontenc}
@@ -28,14 +28,18 @@
 %\renewcommand{\thefootnote}{\fnsymbol{footnote}}
 \newcommand{\version}{1}
 \usepackage[
-	backend=biber,
+	%backend=biber,
+	backend=bibtex,
 	citestyle=authoryear-icomp,
 	maxcitenames=1,
 	bibstyle=numeric]{biblatex}
 
 	\makeatletter
 
-\addbibresource{biblio.bib}
+%\addbibresource{biblio.bib}
+
+\bibliography{biblio}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Programming with ScaFi!]
 {Programming (and Learning) Self-Adaptive \& Self-Organising Behaviour with ScaFi}
@@ -78,6 +82,104 @@
   \end{frame}
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\lstdefinelanguage{scala}{
+  keywords={abstract,case,catch,class,def,%
+    do,else,extends,false,final,finally,%
+    for,if,implicit,import,match,mixin,%
+    new,null,object,override,package,%
+    private,protected,requires,return,sealed,%
+    super,this,throw,trait,true,try,lazy,%
+    type,val,var,while,with,yield,forSome},
+  otherkeywords={=>,<-,<\%,<:,>:,\#},
+  sensitive=true,
+  morecomment=[l]{//},
+  morecomment=[n]{/*}{*/},
+  morestring=[b]",
+  morestring=[b]',
+  morestring=[b]""",
+  basicstyle=\lst@ifdisplaystyle\footnotesize\fi\ttfamily,
+  emphstyle=\bfseries
+}
+\definecolor{ddarkgreen}{rgb}{0,0.5,0}
+\lstdefinelanguage{scafi}{frame=single,basewidth=0.5em,language={scala},
+keywordstyle=\color{blue}\textbf, commentstyle=\color{ddarkgreen},
+keywordstyle=[2]\color{red}\textbf, keywords=[2]{rep,nbr,foldhood,foldhoodPlus,aggregate,branch,spawn},
+keywordstyle=[3]\color{gray}, keywords=[3]{Me,AroundMe,Everywhere,Forever}, %,@@,@@@
+keywordstyle=[4]\color{red}\textbf, keywords=[4]{in,out,rd},
+keywordstyle=[5]\color{violet}, keywords=[5]{evolve,when,andNext,workflow,C,gossip},
+keywordstyle=[6]\color{orange}, keywords=[6]{Available,Serving,Done,Waiting,Removing}}
+
+\newcommand{\hsplit}[2]{
+\begin{minipage}{0.48\textwidth}
+#1
+\end{minipage}
+\hfill
+\begin{minipage}{0.48\textwidth}
+#2
+\end{minipage}
+}
+\newcommand{\hsplits}[4]{
+\begin{minipage}{#1\textwidth}
+#3
+\end{minipage}
+\hfill
+\begin{minipage}{#2\textwidth}
+#4
+\end{minipage}
+}
+
+\newcommand{\lbl}[1]{\textbf{\textcolor{gray!90!white}{#1}}}
+\newcommand{\enf}[1]{{\textcolor{red}{#1}}}
+\newcommand{\bo}[1]{\textbf{#1}}
+
+\newcommand{\imgh}[2]{
+\begin{figure}
+\centering
+\includegraphics[width=#1\textwidth]{img/#2}
+\end{figure}
+}
+\newcommand{\imgv}[2]{
+\begin{figure}
+\centering
+\includegraphics[height=#1\textheight]{img/#2}
+\end{figure}
+}
+
+\newtcblisting{mycode}[3]{%
+  boxsep=0pt,
+  boxrule=0pt,
+  arc=1mm, 
+  left=1mm,
+  %auto outer arc,
+  size=fbox,%tight,
+  %colframe=blue!40!black, colframe=black!30!white,
+  %colbacktitle=blue!80!white,
+  colback=blue!5,
+  %toprule=0.1mm, bottomrule=0.1mm, rightrule=0.1mm, leftrule=1mm, 
+  listing only,
+  listing options={language=scala, alsoletter={-},
+    backgroundcolor={},
+  	columns=fullflexible,
+  	lineskip={-1.5pt},
+  	xleftmargin=0px,
+  	belowskip={0px},
+  	aboveskip={0px},
+  	frame=none,
+  	#2
+  },
+  title={#3},#1
+}
+\lstdefinestyle{s}{basicstyle=\ttfamily\footnotesize}
+\lstdefinestyle{ss}{basicstyle=\ttfamily\scriptsize}
+\lstdefinestyle{sss}{basicstyle=\ttfamily\tiny}
+\lstdefinestyle{conf}{language={},morecomment=[l][\color{darkgreen}]{\#},
+basicstyle=\ttfamily\scriptsize}
+
+
+
 \begin{document}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \input{macro-ac.tex}
@@ -226,6 +328,75 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 \end{alertblock}
 \end{frame}
 \subsection{Aggregate Computing}
+
+\newsavebox{\exoprogram}
+\begin{lrbox}{\exoprogram}
+\begin{mycode}{width=6cm}{language=scafi,style=sss,frame=none}{}
+def channel(source: Boolean, target: Boolean, width: Double) =
+  dilate(gradient(source) + gradient(target) <=
+    distance(source, target), width)
+\end{mycode}
+\end{lrbox}
+
+\begin{frame}[fragile]{Aggregate Computing (AC) in 1 Slide}
+
+\hsplit{
+
+\begin{block}{\footnotesize Self-org-like computational model}
+\scriptsize
+
+\lbl{interaction:} \emph{repeated} msg exchange with \bo{neighbours}\vspace{0.1cm}
+
+\lbl{behaviour:} \emph{repeated} execution of \enf{async rounds} of \bo{sense -- compute -- (inter)act} \vspace{0.1cm}
+
+
+\lbl{formal model of executions:} event structures \vspace{0.1cm}
+
+%\lbl{semantics:} (1) device; (2) network; (3) global comp.
+\end{block}
+
+%\uncover<3-4>{
+\begin{block}{}
+\scriptsize
+
+\lbl{abstraction:} \bo{computational fields} ($\mathit{dev/evt} \mapsto \mathbb{V}$) \vspace{0.1cm}
+
+\lbl{formal core language:} field calculus~\cite{vbdacp:ac:survey:jlamp}\vspace{0.1cm}
+
+\lbl{paradigm:} \bo{functional, macro-programming} \vspace{0.1cm} %--- supporting compositionality
+
+\centering
+\imgv{0.22}{channel.pdf}
+\usebox{\exoprogram}
+\end{block}
+
+\tiny \fullcite{vbdacp:ac:survey:jlamp}%\fullcite{beal2015aggregate-programming}
+
+%}
+}{
+
+%\uncover<2-4>{
+\begin{block}{}
+\centering
+%\hsplits{0.36}{0.6}{
+%\imgh{1}{amorphous2.pdf}
+%}{
+%\imgh{1}{event-structure.pdf}
+%}
+\imgv{0.28}{event-structure.pdf}
+\end{block}
+%}
+
+%\uncover<4-4>{
+\begin{block}{} %{Engineering approach}
+\imgv{0.32}{layerss.pdf}
+\tiny \fullcite{bpv:aggregate:programming}
+\end{block}
+%}
+}
+
+\end{frame}
+
 \begin{frame}[c, plain]
 \begin{center}
 	\includegraphics[width=0.5\textwidth]{img/aggregate-computing-structure.png}\\
@@ -645,6 +816,11 @@ deployments: # Description of where the nodes should be
 \setbeamertemplate{page number in head/foot}{}
 %/////////
 
+
+\begin{frame}[allowframebreaks]{References}
+\def\bibfont{\footnotesize}
+\printbibliography
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \end{document}
