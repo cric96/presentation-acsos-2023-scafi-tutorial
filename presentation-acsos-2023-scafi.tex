@@ -326,7 +326,7 @@ depending on \bold{circumstances}, in order to better reach its \emph{goal}\\
 		\item \bold{automatically} adapt to environment details
 		\item focus on how the \bold{global output} pattern can be obtained from global inputs
 		\item focus on both \bold{spatial} and \bold{temporal} computing patterns
-		\item[\faArrowRight] the ideas around macro-programming paradigms~\citeinslide{casadei2023macro}!
+		\item[\faArrowRight] the ideas around \enf{macro-programming} paradigms~\citeinslide{casadei2023macro}!
 		\begin{itemize}
 			\item \bold{Aggregate computing}
 			\item Buzz
@@ -422,7 +422,7 @@ def channel(source: Boolean, target: Boolean, width: Double) =
 {\faCircle \, \normalsize{\emph{Networked computation}} \faArrowRight \,
 a proximity-based self-organising system hidden ``under-the-hood''}
 \end{frame}
-\begin{frame}{Computational model -- self-organising like execution}
+\begin{frame}{Computational model -- self-organisation-like execution}
 \begin{itemize}
 	\item \emph{Continuous} communication with \bold{neighbours} only (\faArrowRight decentralisation)
 	\item \emph{Continous} execution of async \bold{rounds} of sense - compute - communicate
@@ -430,6 +430,39 @@ a proximity-based self-organising system hidden ``under-the-hood''}
 \centering
 \includegraphics[width=0.8\textwidth]{img/execution-step.png}
 \end{frame}
+
+\begin{frame}[fragile]{Applicability: in a nutshell}
+
+Essentially, this approach can be used to program \enf{any} system that can be recast to the following
+
+\begin{itemize}
+\item \lbl{Structure:} network of locally interacting agents
+	\begin{itemize}
+	\item \enf{neighbouring relationship}: e.g. based on network connectivity, physical distance, social relationship, or whatever
+	\item \enf{dynamicity/openness}: devices may move/fail, enter/exit the system at runtime, and neighbourhoods may change
+	\end{itemize}
+\item \lbl{Interaction:} 
+	\begin{itemize}
+	\item \lbl{with neighbours:} asynchronous message passing
+	\item \lbl{with environment:} via sensors and actuators
+	\end{itemize}
+\item \lbl{Behaviour:} \enf{sense--compute--interact}
+	\begin{itemize}
+	\item \lbl{sense:} acquire \enf{context} (messages from neigbhours, values from sensors)
+	\item \lbl{compute:} mapping context to (inter-)action
+	\item \lbl{interact:} sending messages to neighbours and running actuations
+	\end{itemize}
+\end{itemize}
+
+So, best for applications that are:
+\begin{itemize}
+\item \enf{progressive/long-running}: require multiple coordinated steps/rounds of local processing and action
+\end{itemize}
+
+Assuming this \enf{system model}, AC is about how to specify the ``compute'' part so that \enf{global emergent} outcomes can be eventually attained 
+
+\end{frame}
+
 \begin{frame}[fragile]{Computational Fields: a static view}
 	\begin{alertblock}{Traditionally a map: \textit{Space} $\mapsto$ \textit{Values}}
 		\begin{itemize}
