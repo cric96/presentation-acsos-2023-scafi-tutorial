@@ -173,7 +173,7 @@ keywordstyle=[6]\color{orange}, keywords=[6]{Available,Serving,Done,Waiting,Remo
   colback=blue!5,
   %toprule=0.1mm, bottomrule=0.1mm, rightrule=0.1mm, leftrule=1mm, 
   listing only,
-  listing options={language=scala, alsoletter={-},
+  listing options={language=scafi, alsoletter={-},
     backgroundcolor={},
   	columns=fullflexible,
   	lineskip={-1.5pt},
@@ -210,6 +210,10 @@ basicstyle=\ttfamily\scriptsize}
 	\item \url{https://github.com/AggregateComputing/acsos-2023-scafi-tutorial}: repository with the examples/exercises proposed in the tutorial
 	\\
 	Follow the README.md to run examples and setup a development environment.
+	
+	\item ScaFi-Web~\cite{DBLP:conf/coordination/AguzziCMPV21} (a online web simulator for ScaFi programs)\\
+	\url{https://scafi.github.io/web}\\
+	\url{https://tomcat-glad-muskox.ngrok-free.app/}
 	\end{itemize}	
 
 
@@ -217,10 +221,19 @@ basicstyle=\ttfamily\scriptsize}
 
 \end{frame}
 
-\begin{frame}[fragile]{Frequently Asked Questions (FAQs)}
+\begin{frame}[fragile,allowframebreaks]{Frequently Asked Questions (FAQs)}
 
 \begin{itemize}
+\item \question{What is it all about?} \enf{ScaFi} is an \enf{aggregate programming} language: it supports the development of self-organising behaviours. It is integrated into \enf{Alchemist}: this allows to build simulations of networked systems that execute ScaFi programs.
+
 \item \question{Where do I start?} \refslide{quickstart}
+
+\item \question{How can I quickly experiment with the programming model?}
+	\begin{itemize}
+	\item ScaFi-Web~\cite{DBLP:conf/coordination/AguzziCMPV21} (a online web simulator for ScaFi programs)\\
+	\url{https://scafi.github.io/web}\\
+	\url{https://tomcat-glad-muskox.ngrok-free.app/}
+	\end{itemize}
 
 \item \question{Where do I learn more about the tools (ScaFi, Alchemist)?}
 	\begin{itemize}
@@ -899,6 +912,87 @@ deployments: # Description of where the nodes should be
 \centering
 \includegraphics[width=0.5\textwidth]{img/qr-code-today.png}
 \end{frame}
+
+
+\begin{frame}[fragile]{Example 1: static constant field}
+
+\begin{mycode}{}{}{}
+// 1. Select the incarnation
+import it.unibo.alchemist.model.scafi.ScafiIncarnationForAlchemist._
+
+// 2. define your aggregate program by extending 'AggregateProgram'
+class Example1 extends AggregateProgram {
+  // 3. define the main method of the aggregate computing script
+    override def main(): Int = 22
+}
+\end{mycode}
+
+\imgv{0.6}{example1-static-const-field.png}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example 3: sensor query}{\textbf{\texttt{mid()}} provides the device ID}
+
+\begin{mycode}{}{}{}
+// Code in the AggregateProgram's main method:
+mid()
+\end{mycode}
+
+\imgv{0.7}{example3-mid.png}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Example 4: sensor query}{\textbf{\texttt{sense("name")}} reads the current value of a sensor}
+
+\begin{mycode}{}{}{}
+sense[Boolean]("source")
+\end{mycode}
+
+\imgv{0.7}{example4-source.png}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example 5: neighbour interaction}{\textbf{\texttt{foldhood(i)(f)(e)}} aggregates with \texttt{f} the neighbours' values for \texttt{e}}
+
+\begin{mycode}{}{}{}
+// *Plus version does not consider the device itself in the neighbourhood
+foldhoodPlus(0)((a,b) => a + b)(nbr(1))
+\end{mycode}
+
+\imgv{0.7}{example5-fold.png}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Example 6: stateful computations}{\textbf{\texttt{rep(i)(f)}} updates a value (initially \texttt{i}) through function \texttt{f}}
+
+\begin{mycode}{}{}{}
+rep(0){ _ + 1 }
+\end{mycode}
+
+\imgv{0.7}{example6-rep.png}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Example 8: self-healing gradient}{Field of minimum distances from source nodes}
+
+\begin{mycode}{}{}{}
+rep(Double.PositiveInfinity)(distance =>
+    mux(sense[Boolean]("source")) {
+      0.0
+    } {
+      minHoodPlus(nbr(distance) + nbrRange)
+    }
+  )
+\end{mycode}
+
+\imgv{0.7}{example8-gradient.png}
+
+\end{frame}
+
+
 \section{}
 
 %===============================================================================
